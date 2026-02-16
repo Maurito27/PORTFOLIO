@@ -14,62 +14,124 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    titulo: 'Landing de captación B2B para SaaS legal',
-    slug: 'landing-captacion-b2b-saas-legal',
+    titulo: 'ETL de ventas con checkpoints y backfill (operación vending)',
+    slug: 'etl-ventas-checkpoints-backfill',
     contexto:
-      'Startup legaltech con tráfico orgánico estable, pero baja conversión de leads calificados.',
+      'Operación de vending con múltiples puntos de venta y fuentes heterogéneas (POS, ERP y archivos operativos), con necesidad de consolidación diaria para análisis comercial.',
     problema:
-      'La propuesta de valor estaba dispersa y el formulario no comunicaba confianza suficiente.',
+      'El pipeline de ventas fallaba de forma intermitente, generaba duplicados en reprocesos y no tenía trazabilidad clara para recuperar ventanas históricas.',
     restricciones:
-      'Sin rediseño completo de marca y con equipo interno limitado para producción de contenido.',
+      'Sin detener la operación diaria, con ventanas acotadas de procesamiento nocturno y dependencia de sistemas legados sin contratos de datos formales.',
     solucion:
-      'Se diseñó una arquitectura de mensajes por niveles, con secciones de objeciones, prueba social y CTA persistente.',
+      'Se implementó un flujo ETL incremental con checkpoints por partición temporal, estrategia de idempotencia por claves de negocio y mecanismo de backfill parametrizable para rehacer periodos específicos sin duplicar registros.',
     entregables: [
-      'Copy estratégico por bloque',
-      'Diseño UI en Figma',
-      'Implementación en Next.js + analítica de eventos',
-      'Plan de test A/B inicial'
+      'Diseño de modelo canónico de ventas',
+      'Pipeline incremental con checkpoints persistentes',
+      'Script de backfill por rango de fechas',
+      'Runbook operativo con alertas y validaciones de calidad'
     ],
-    impacto: 'PROXY: mejora percibida en claridad de oferta y calidad de lead.',
+    impacto:
+      'PROXY: estabilidad de carga diaria y confiabilidad de históricos. Método de cálculo: % de ejecuciones exitosas sin intervención manual por semana + diferencia absoluta entre total de ventas en fuente operativa y tabla consolidada por día.',
     assets_requeridos: [
-      'Logo y lineamientos visuales básicos',
-      'Testimonios de clientes',
-      'Listado de objeciones comerciales frecuentes'
+      'Diccionario de campos por sistema origen',
+      'Acceso de solo lectura a tablas/fuentes operativas',
+      'Reglas de negocio para conciliación de ventas'
     ],
     lecciones: [
-      'Reducir fricción en formularios impacta más que agregar campos de segmentación.',
-      'La sección de garantías acelera decisiones en tickets medios-altos.'
+      'Sin idempotencia explícita, cualquier reproceso escala inconsistencias aguas abajo.',
+      'Definir checkpoints por dominio de negocio simplifica soporte y auditoría.'
     ],
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Plausible']
+    stack: ['Python', 'SQL', 'Airflow', 'PostgreSQL']
   },
   {
-    titulo: 'Optimización de onboarding para plataforma educativa',
-    slug: 'optimizacion-onboarding-plataforma-educativa',
+    titulo: 'Auditoría de dashboard: conteos inconsistentes (fuente vs BI)',
+    slug: 'auditoria-dashboard-conteos',
     contexto:
-      'Producto edtech con alto registro inicial y baja activación en las primeras 48 horas.',
+      'Equipo de gestión trabajaba con dashboards para decisiones semanales, pero surgían discrepancias recurrentes entre reportes del BI y los conteos observados en sistemas fuente.',
     problema:
-      'Usuarios nuevos no entendían el siguiente paso tras crear la cuenta.',
+      'Métricas con definiciones ambiguas, joins con cardinalidad no controlada y filtros temporales inconsistentes entre modelos analíticos.',
     restricciones:
-      'Roadmap de producto cerrado y sin capacidad para cambios profundos de backend.',
+      'Sin reemplazar la herramienta de BI existente y con necesidad de corregir sin interrumpir la lectura diaria de tableros.',
     solucion:
-      'Se rediseñó el flujo inicial con foco en una sola acción de valor por pantalla y microcopys de guía.',
+      'Se ejecutó una auditoría de punta a punta (origen-transformación-visualización), se normalizaron definiciones de KPI en una capa semántica y se agregaron pruebas de reconciliación automáticas entre fuente y mart analítico.',
     entregables: [
-      'Mapa de fricción del flujo actual',
-      'Nuevo flujo UX de onboarding',
-      'Componentes reutilizables para pasos',
-      'Métricas proxy de activación'
+      'Matriz de trazabilidad KPI → consulta → fuente',
+      'Inventario de discrepancias priorizadas por impacto operativo',
+      'Reglas de modelado y documentación semántica',
+      'Suite de pruebas de reconciliación diaria'
     ],
-    impacto: 'PROXY: mayor finalización del flujo y menor abandono en primer uso.',
+    impacto:
+      'PROXY: confianza operativa en reporting. Método de cálculo: variación porcentual de conteos clave (fuente vs BI) por corte diario + cantidad de incidencias de datos reportadas por stakeholders por sprint.',
     assets_requeridos: [
-      'Acceso a analytics',
-      'Grabaciones de sesión',
-      'Listado de features prioritarias'
+      'Acceso a consultas/modelos del BI actual',
+      'Extractos de datos fuente para periodos representativos',
+      'Definiciones de negocio validadas por áreas usuarias'
     ],
     lecciones: [
-      'Un único CTA principal por pantalla mejora la toma de decisión.',
-      'Las ayudas contextuales reducen tickets de soporte en etapas tempranas.'
+      'La mayoría de discrepancias persisten por definiciones no versionadas, no por la visualización en sí.',
+      'Las pruebas de reconciliación deben vivir junto al modelo, no como chequeos manuales ad hoc.'
     ],
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Hotjar']
+    stack: ['SQL', 'dbt', 'BigQuery', 'Looker Studio']
+  },
+  {
+    titulo: 'Plan de migración a ERP Holded como fuente única de verdad',
+    slug: 'migracion-holded-ssot',
+    contexto:
+      'Empresa en crecimiento con información financiera y operativa fragmentada entre planillas, sistema contable previo y herramientas comerciales desconectadas.',
+    problema:
+      'No existía una fuente única confiable para facturación, cobros y estado de clientes, lo que dificultaba cierres mensuales y seguimiento de caja.',
+    restricciones:
+      'Migración por etapas para no interrumpir procesos administrativos críticos, con recursos internos limitados para limpieza histórica.',
+    solucion:
+      'Se definió un plan de migración incremental hacia Holded como SSOT, incluyendo mapeo de entidades, estrategia de saneamiento de maestros, criterios de corte por módulo y plan de convivencia temporal con sistemas legados.',
+    entregables: [
+      'Mapa de datos maestro y dependencias entre sistemas',
+      'Plan de migración por fases con hitos y riesgos',
+      'Checklist de calidad previa a carga inicial',
+      'Guía operativa para periodo de coexistencia'
+    ],
+    impacto:
+      'PROXY: reducción de fricción operativa en cierres y consultas transversales. Método de cálculo: tiempo total invertido en cierre administrativo mensual + número de ajustes manuales posteriores al cierre + % de registros maestros completos en Holded.',
+    assets_requeridos: [
+      'Exportes históricos de clientes, productos y facturas',
+      'Reglas fiscales/contables vigentes del negocio',
+      'Responsables funcionales por área para validación'
+    ],
+    lecciones: [
+      'La calidad del dato maestro define el éxito de la migración más que la herramienta elegida.',
+      'Un periodo de convivencia controlado reduce riesgo sin perder trazabilidad.'
+    ],
+    stack: ['Holded', 'CSV', 'SQL', 'Google Sheets']
+  },
+  {
+    titulo: 'Finhub: portal financiero personal (MVP)',
+    slug: 'finhub-portal-financiero',
+    contexto:
+      'Iniciativa de producto digital para centralizar seguimiento financiero personal en una interfaz simple, priorizando velocidad de validación con usuarios tempranos.',
+    problema:
+      'Las personas usuarias necesitaban una vista unificada de ingresos, gastos y metas, pero los flujos iniciales eran dispersos y sin jerarquía clara de información.',
+    restricciones:
+      'Alcance acotado de MVP, sin integraciones bancarias complejas en fase inicial y con foco en aprendizaje rápido de uso real.',
+    solucion:
+      'Se construyó un MVP con arquitectura modular, dashboard base de salud financiera, carga manual asistida de movimientos y sistema de categorías/metas para validar hipótesis de valor antes de ampliar integraciones.',
+    entregables: [
+      'Definición de alcance funcional de MVP',
+      'Flujos UX de registro de movimientos y metas',
+      'Dashboard inicial con indicadores personales',
+      'Instrumentación analítica para aprendizaje de uso'
+    ],
+    impacto:
+      'PROXY: adopción y recurrencia temprana del MVP. Método de cálculo: usuarios activos semanales sobre usuarios registrados + frecuencia media de registro de movimientos por usuario activo + tasa de retorno a 7 días.',
+    assets_requeridos: [
+      'Entrevistas con usuarios objetivo',
+      'Taxonomía inicial de categorías financieras',
+      'Lineamientos básicos de identidad visual del producto'
+    ],
+    lecciones: [
+      'En etapa MVP, priorizar claridad de flujo supera la cobertura de funcionalidades avanzadas.',
+      'Medir recurrencia temprano guía mejor el roadmap que medir solo altas iniciales.'
+    ],
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL']
   }
 ];
 
