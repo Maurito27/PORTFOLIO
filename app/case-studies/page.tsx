@@ -13,7 +13,7 @@ type Categoria = 'ETL' | 'BI / Auditoría' | 'ERP / Migración' | 'Producto';
 function inferirCategoria(slug: string): Categoria {
   if (slug.includes('etl') || slug.includes('checkpoints') || slug.includes('backfill')) return 'ETL';
   if (slug.includes('auditoria') || slug.includes('dashboard')) return 'BI / Auditoría';
-  if (slug.includes('holded') || slug.includes('migracion') || slug.includes('ssot')) return 'ERP / Migración';
+  if (slug.includes('migracion') || slug.includes('ssot')) return 'ERP / Migración';
   return 'Producto';
 }
 

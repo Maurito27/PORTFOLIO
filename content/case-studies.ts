@@ -85,28 +85,28 @@ export const caseStudies: CaseStudy[] = [
     ]
   },
   {
-    titulo: 'Plan de migración a ERP Holded como fuente única de verdad',
-    slug: 'migracion-holded-ssot',
+    titulo: 'Plan de migración a ERP como fuente única de verdad (E-commerce EU)',
+    slug: 'migracion-erp-ssot',
     contexto:
-      'Decisión ejecutiva: centralizar la operación en un ERP (Holded) como “fuente única de verdad” para consolidar datos y reporting, reduciendo sistemas paralelos.',
+      'Decisión ejecutiva en empresa e-commerce europea: centralizar la operación en un ERP como “fuente única de verdad” para consolidar datos y reporting, reduciendo sistemas paralelos.',
     problema:
       'Los datos vivían dispersos entre pipelines, reportes y fuentes operativas. Sin un mapeo claro, la migración podía introducir inconsistencias (entidades duplicadas, campos mal transformados, totales que no cierran).',
     restricciones:
       'Dependencia de capacidades reales del ERP y sus módulos. La migración debía hacerse con discovery previo, mapeo explícito, reconciliación por períodos y estrategia de rollback para evitar cargar datos erróneos.',
     solucion:
-      'Propuse un enfoque por fases: discovery de módulos, mapeo entidad/campo (origen → Holded) con reglas de transformación y validación, plan de carga inicial (backfill) + incremental, y reconciliación (totales por período) antes de declarar el ERP como SSOT. El objetivo fue controlar riesgo: migrar con pruebas, no “a ciegas”.',
+      'Propuse un enfoque por fases: discovery de módulos, mapeo entidad/campo (origen → ERP) con reglas de transformación y validación, plan de carga inicial (backfill) + incremental, y reconciliación (totales por período) antes de declarar el ERP como SSOT. El objetivo fue controlar riesgo: migrar con pruebas, no “a ciegas”.',
     entregables: [
       'Documento de discovery: módulos relevantes y decisión de encaje',
-      'Tabla de mapping (origen → Holded) con transformaciones y validaciones',
+      'Tabla de mapping (origen → ERP) con transformaciones y validaciones',
       'Plan de migración por etapas (backfill + incremental) con reconciliación',
       'Checklist de go-live y rollback (criterios de aceptación)'
     ],
     impacto:
       'PROXY: reducción de fuentes paralelas y mejora de consistencia de reporting.\n' +
-      'Método de cálculo: (a) contar fuentes activas antes/después, (b) reconciliar totales (ventas por período) entre sistema previo vs Holded, (c) medir % de registros mapeados sin errores por lote.',
+      'Método de cálculo: (a) contar fuentes activas antes/después, (b) reconciliar totales (ventas por período) entre sistema previo vs ERP, (c) medir % de registros mapeados sin errores por lote.',
     assets_requeridos: [
       'Tabla de mapping (10–20 filas reales anonimizadas)',
-      'Diagrama target: origen → integración → Holded → reporting',
+      'Diagrama target: origen → integración → ERP → reporting',
       'Ejemplo de reconciliación por período (aunque sea parcial)'
     ],
     lecciones: [
@@ -114,16 +114,16 @@ export const caseStudies: CaseStudy[] = [
       'El discovery temprano evita retrabajo y datos “basura” dentro del ERP.'
     ],
     stack: [
-      'Holded (ERP)',
+      'ERP (anónimo)',
       'Staging (CSV/Sheets) para mapping y control',
       'Integración (ETL/API según disponibilidad)'
     ]
   },
   {
-    titulo: 'Finhub: portal financiero personal (MVP)',
-    slug: 'finhub-portal-financiero',
+    titulo: 'Portal financiero interno (MVP, E-commerce EU)',
+    slug: 'portal-financiero-interno',
     contexto:
-      'Proyecto personal en desarrollo: un portal para seguimiento financiero (ingresos, gastos, cuentas, previsión mensual) con un dashboard central y reglas para evitar datos duplicados o inconsistentes.',
+      'Caso interno en empresa e-commerce europea: portal para seguimiento financiero (ingresos, gastos, cuentas, previsión mensual) con un dashboard central y reglas para evitar datos duplicados o inconsistentes.',
     problema:
       'La información financiera estaba fragmentada entre tarjetas, banco y registros manuales, haciendo difícil proyectar el mes siguiente y tomar decisiones con rapidez.',
     restricciones:
