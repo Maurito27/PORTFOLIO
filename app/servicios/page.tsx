@@ -34,7 +34,7 @@ const servicios = [
   {
     titulo: 'Migración a ERP como SSOT (2–4 semanas)',
     descripcion:
-      'Discovery + mapping + reconciliación para centralizar operación en ERP (ej. Holded) con riesgo controlado.',
+      'Discovery + mapping + reconciliación para centralizar operación en ERP con riesgo controlado.',
     entregables: [
       'Discovery de módulos y encaje',
       'Tabla mapping origen → ERP (transformaciones + validaciones)',

@@ -17,11 +17,17 @@ const evidencias = [
 
 export default function ProofPage() {
   return (
-    <div>
+    <div className="space-y-6">
       <SectionIntro
         title="Proof"
         description="Checklist sugerido para construir evidencia confiable en cada caso de estudio."
       />
+      <section className="card space-y-2">
+        <h2 className="text-lg font-semibold text-slate-900">Confidencialidad (NDA-first)</h2>
+        <p className="text-slate-700">
+          Por acuerdos de confidencialidad, no publico nombres de empresas, métricas exactas, datos internos, capturas de tableros/dashboards, ni detalles operativos sensibles. Lo que sí muestro: metodología, entregables, arquitectura a alto nivel, y evidencia sanitizada. Evidencia adicional puede revisarse en demo privada.
+        </p>
+      </section>
       <ul className="space-y-3">
         {evidencias.map((item) => (
           <li key={item} className="card flex items-start gap-3 text-slate-700">
